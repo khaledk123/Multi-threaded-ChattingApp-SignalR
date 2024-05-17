@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Chat";
+}
+
+@section css {
+    <link href="~/css/chat.css" rel="stylesheet" />
+}
+<div class="chat-container">
+    <h1>Chat</h1>
+    <div class="messages" id="lb"></div>
+    <ul id="ul" class="chat-list"></ul>
+    <div class="message-input">
+        <input type="text" id="txtmessaaeg" class="message-box" onkeyup="type()" placeholder="Type your message..." />
+        <input type="button" value="Send" onclick="send()" class="send-button" />
+    </div>
+    <div class="group-join">
+        <input type="text" id="gtxt" class="group-input" placeholder="Group name..." />
+        <input type="button" value="Join" onclick="join()" class="join-button" />
+    </div>
+    <div class="group-send">
+        <input type="text" id="text" class="group-message-box" placeholder="Group message..." />
+        <input type="button" value="Send to Group" onclick="sendtogroub()" class="send-to-group-button" />
+    </div>
+    
+</div>
+
+@section Scripts {
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script>
+        name = prompt("Enter your name");
+
+         var con = new signalR.HubConnectionBuilder().withUrl("/chat").build();
+
+        con.start();
+
+        con.on("newmessage", function (messs) {
+            $("#lb").html(messs.name + "is typing");
+        })
+
+        con.on("newmessage", function (mess) {
+            $("#ul").append("<li>" + mess.name + ":" + mess.message + "</li>" );
+        })
+        con.on("newmember", function (n, g) {
+            $("#ul").append("<li><i>" + n + " joined " + g + "</i></li>");
+        })
+        con.on("groubmessage", function (n, m, g) {
+            $("#ul").append("<li>" + n + "(" + g + ")" + m + "</li>");
+        })
+
+        function type() 
+        {
+            var obj1 = {
+                "name": name,
+                "message": $("#txtmessaaeg").val()
+            }
+            con.invoke("typing", obj1)
+        }
+
+        function send() {
+            var obj ={
+                "name" :name,
+                "message": $("#txtmessaaeg").val()
+            }
+            con.invoke("sendmessage",obj)
+        }
+
+        function join() {
+            con.invoke("joingroup", $("#gtxt").val(), name);
+        }
+        function sendtogroub (){
+            con.invoke("sendtoGroub", name, $("#text").val(), $("#gtxt").val());
+        }
+
+    </script>
+}
+
+
+
+
+
+
+
+
+

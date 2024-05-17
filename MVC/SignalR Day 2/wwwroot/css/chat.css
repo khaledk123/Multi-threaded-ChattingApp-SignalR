@@ -1,0 +1,74 @@
+﻿
+.chat-container {
+    width: 600px;
+    margin: 50px auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.messages {
+    height: 300px;
+    overflow-y: scroll;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.chat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .chat-list li {
+        padding: 10px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+.message-input,
+.group-join,
+.group-send {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.message-box,
+.group-input,
+.group-message-box {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+    .message-box:focus,
+    .group-input:focus,
+    .group-message-box:focus {
+        border-color: #4CAF50;
+    }
+
+.send-button,
+.join-button,
+.send-to-group-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .send-button:hover,
+    .join-button:hover,
+    .send-to-group-button:hover {
+        background-color: #45A049;
+    }
+
